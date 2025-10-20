@@ -17,9 +17,14 @@ public class HomeController {
         return "login";
     }
 
-    @RequestMapping("register")
+    @RequestMapping("/register")
     public String register(){
         return "register";
+    }
+
+    @RequestMapping("/products")
+    public String products(){
+        return "product";
     }
 
 }
