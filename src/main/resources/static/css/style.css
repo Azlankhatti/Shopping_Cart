@@ -1,7 +1,15 @@
 .card-sh
 {
 box-shadow: 0 0 8px rgba(0,0,0,0.3);
+
+/*transition: transform 0.3s ease, box-shadow 0.3s ease;*/
 }
+/*
+.card-sh:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+*/
 
 .car-div
 {
