@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<section>
+    <div class="container-fluid p-5 mt-5">
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="card card-sh">
+                    <div class="card-header text-center">
+                        <p class="fs-4">Edit Category</p>
+                        <th:block th:if="${session.succMsg}">
+                            <p class="text-success fw-bold">[[${session.succMsg}]]</p>
+                            <th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+                        </th:block>
+                        <th:block th:if="${session.errorMsg}">
+                            <p class="text-danger fw-bold">[[${session.errorMsg}]]</p>
+                            <th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+                        </th:block>
+                    </div>
+                    <div class="card-body">
+                        <form action="/admin/saveCategory" method="post" enctype="multipart/form-data">
+
+                            <div class="mb-3">
+                                <label>Enter Category</label>
+                                <input type="text" class="form-control" name="name">
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Status</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="active" id="active" value="true" checked>
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        Active
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="active" id="exampleRadios2" value="false">
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        InActive
+                                    </label>
+                                </div>
+
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label>Upload Image</label>
+                                <input type="file" class="form-control" name="file">
+                            </div>
+
+                            <button class="btn btn-primary col-md-10 mt-12" >Save</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+        </div>
+    </div>
+
+</section>
+
+</body>
+</html>

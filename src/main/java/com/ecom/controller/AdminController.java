@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,7 +40,8 @@ public class AdminController {
 
 
     @GetMapping("/category")
-    public String category(){
+    public String category(Model m){
+        m.addAttribute("categorys",categoryService.getAllCategory());
         return "admin/category";
     }
 
@@ -63,7 +65,7 @@ public class AdminController {
 
             }else{
 
-                File saveFile = new ClassPathResource("static/imgage").getFile();
+                File saveFile = new ClassPathResource("static/image").getFile();
 
                 Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "category_img" + File.separator + file.getOriginalFilename());
 
@@ -81,6 +83,25 @@ public class AdminController {
     }
 
 
+
+    @GetMapping("/deleteCategory/{id}")
+    public String deleteCategory(@PathVariable int id,HttpSession session){
+
+        boolean b = categoryService.deleteCategory(id);
+        if(b){
+            session.setAttribute("succMsg","Category Delete");
+
+        }else {
+            session.setAttribute("errorMsg","Something Wrong On Server");
+        }
+        return "redirect:/admin/category";
+    }
+
+
+    @GetMapping("/loadEditCategory")
+    public String loadEditCategory(){
+            return "/admin/edit_category";
+    }
 
 
 }
