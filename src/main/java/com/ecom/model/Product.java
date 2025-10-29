@@ -1,30 +1,37 @@
 package com.ecom.model;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-public class Category {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String name;
-    private String imageName;
+    @Column(length = 500)
+    private String title;
 
-    private boolean isActive;
+    @Column(length = 5000)
+    private String Description;
+
+    private String category;
+
+    private Double price;
+
+    private int stock;
+
+    private String image;
+
+
+
 
 }
