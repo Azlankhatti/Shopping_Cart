@@ -55,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updateProduct(Product product, MultipartFile image) throws IOException {
+    public Product updateProduct(Product product, MultipartFile image) {
 
         Product dbproduct = getProductById(product.getId());
 
