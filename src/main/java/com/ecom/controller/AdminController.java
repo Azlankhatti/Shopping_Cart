@@ -29,7 +29,9 @@ public class AdminController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
     private ProductService productService;
+
 
 
 
@@ -177,6 +179,46 @@ public class AdminController {
 
             return "redirect:/admin/loadAddProduct";
         }
+
+        @GetMapping("/products")
+        public String loadViewProduct(Model m){
+        m.addAttribute("products",productService.getALLProducts());
+        return "/admin/products";
+        }
+
+
+
+    @GetMapping("/deleteProduct/{id}")
+    public String deleteProduct(@PathVariable int id,HttpSession session){
+        boolean dp = productService.deleteProduct(id);
+        if(dp){
+        session.setAttribute("succMsg","Product Delete Success");
+        }else {
+        session.setAttribute("errorMsg","Something Wrong On Server");
+        }
+
+        return "redirect:/admin/products";
+    }
+
+
+    @GetMapping("/editProduct/{id}")
+    public String editProduct(@PathVariable int id,Model m,){
+        m.addAttribute("product",productService.getProductById(id));
+        m.addAttribute("categories",categoryService.getAllCategory());
+        return "/admin/edit_product";
+    }
+
+
+    @PostMapping("/updateProduct")
+    public String updateProduct(@ModelAttribute Product product,@RequestParam("file") MultipartFile image ,HttpSession session,Model m){
+
+
+
+        return "admin/edit_product";
+    }
+
+
+
 
 
 }
