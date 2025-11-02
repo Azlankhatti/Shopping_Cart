@@ -66,8 +66,17 @@ public class ProductServiceImpl implements ProductService {
         dbproduct.setCategory(product.getCategory());
         dbproduct.setPrice(product.getPrice());
         dbproduct.setStock(product.getStock());
+        dbproduct.setImage(imageName);
+        dbproduct.setDiscount(product.getDiscount());
+
+        Double discount= product.getPrice()*(product.getDiscount()/100.0);
+        Double discountPrice = product.getPrice() - discount;
+        dbproduct.setDiscountPrice(discountPrice);
+
+
 
         Product save = productRepository.save(dbproduct);
+
         if(!ObjectUtils.isEmpty(save)){
             if(!image.isEmpty()){
 
