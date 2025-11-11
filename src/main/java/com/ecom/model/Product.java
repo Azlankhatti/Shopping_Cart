@@ -35,6 +35,8 @@ public class Product {
 
     private Double discountPrice;
 
+    private boolean isActive;
+
 
 
 
