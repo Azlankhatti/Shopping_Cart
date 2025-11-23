@@ -2,14 +2,16 @@ package com.ecom.controller;
 
 import com.ecom.model.Category;
 import com.ecom.model.Product;
+import com.ecom.model.UserDetails;
 import com.ecom.service.CategoryService;
 import com.ecom.service.ProductService;
+import com.ecom.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,6 +23,9 @@ public class HomeController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private UserService userService;
 
 
     @RequestMapping("/")
@@ -55,6 +60,25 @@ public class HomeController {
         m.addAttribute("product", productDetails);
 
         return "view_product";
+    }
+
+    @PostMapping("/saveUser")
+    public String saveUser(@ModelAttribute UserDetails user,@RequestParam("img") MultipartFile file){
+
+        String imageName = file.isEmpty() ? "default.jpg" : file.getOriginalFilename();
+        user.setProfileImage(imageName);
+
+        UserDetails saveUser  =userService.saveUser(user);
+
+        if (!ObjectUtils.isEmpty(saveUser)){
+
+
+
+
+        }
+
+
+        return "redirect:/register";
     }
 
 }
