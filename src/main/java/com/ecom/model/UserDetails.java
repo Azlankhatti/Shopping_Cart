@@ -38,6 +38,8 @@ public class UserDetails {
 
     private String profileImage;
 
+    private String role;
+
 
 
 }
