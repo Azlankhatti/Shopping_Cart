@@ -6,4 +6,6 @@ import com.ecom.model.UserDetails;
 public interface UserService {
 
     public UserDetails saveUser(UserDetails user);
+
+    public UserDetails getUserByEmail(String email);
 }

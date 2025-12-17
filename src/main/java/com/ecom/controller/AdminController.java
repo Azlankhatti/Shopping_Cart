@@ -2,8 +2,10 @@ package com.ecom.controller;
 
 import com.ecom.model.Category;
 import com.ecom.model.Product;
+import com.ecom.model.UserDetails;
 import com.ecom.service.CategoryService;
 import com.ecom.service.ProductService;
+import com.ecom.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -19,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -32,7 +35,22 @@ public class AdminController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private UserService userService;
 
+
+    @ModelAttribute
+    public void getUserDetails(Principal p, Model m){
+
+        if(p!=null){
+            String email = p.getName();
+            UserDetails userDtls = userService.getUserByEmail(email);
+            m.addAttribute("user",userDtls);
+        }
+
+        List<Category> allActiveCategory = categoryService.getAllActiveCategory();
+        m.addAttribute("categorys",allActiveCategory);
+    }
 
 
 

@@ -26,7 +26,7 @@ public class AuthSuccessHandlerImpl implements AuthenticationSuccessHandler {
             response.sendRedirect("/admin/");
 
         }else {
-            response.sendRedirect("/user/");
+            response.sendRedirect("/");
         }
     }
 }
