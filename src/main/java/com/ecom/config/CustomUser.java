@@ -46,7 +46,7 @@ public class CustomUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return user.isEnable();
     }
 
     public CustomUser(com.ecom.model.UserDetails user) {

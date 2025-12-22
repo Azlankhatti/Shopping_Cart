@@ -40,6 +40,8 @@ public class UserDetails {
 
     private String role;
 
+    private boolean isEnable;
+
 
 
 }

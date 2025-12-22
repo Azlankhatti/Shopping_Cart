@@ -8,6 +8,7 @@ import com.ecom.service.ProductService;
 import com.ecom.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -248,6 +249,15 @@ public class AdminController {
         }
 
         return "redirect:/admin/editProduct/"+ product.getId();
+    }
+
+
+    @GetMapping("/users")
+    public String getAllUsers(Model m){
+
+        List<UserDetails> users = userService.getUsers("ROLE_USER");
+        m.addAttribute("users",users);
+        return "/admin/users";
     }
 
 
