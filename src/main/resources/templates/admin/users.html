@@ -39,16 +39,14 @@
                     <tr th:each="u,c:${users}">
                         <th scope="row">[[${c.count}]]</th>
                         <td><img th:src="@{'/image/profile_img/'+${u.profileImage}}" width="50px" height="70px"></td>
-                        <td>[[${p.name}]]</td>
-                        <td>[[${p.email}]]</td>
-                        <td>[[${p.mobileNumber}]]</td>
-                        <td>[[${p.address}]]</td>
-                        <td>[[${p.isEnable}]]</td>
-                        <td>[[${p.isActive}]]</td>
-                        <td>[[${p.stock}]]</td>
+                        <td>[[${u.name}]]</td>
+                        <td>[[${u.email}]]</td>
+                        <td>[[${u.mobileNumber}]]</td>
+                        <td>[[${u.address+','+u.city+','+u.state+','+u.pincode}]]</td>
+                        <td>[[${u.isEnable}]]</td>
                         <td>
-                            <a th:href="@{'/admin/editProduct/'+${p.id}}" class="btn btn-sm btn-primary"><i class="fa-solid fa-pen-to-square" ></i> Edit</a>
-                            <a th:href="@{'/admin/deleteProduct/'+${p.id}}" class="btn btn-sm btn-danger"> <i class="fa-solid fa-trash"></i> Delete</a>
+                            <a th:href="@{'/admin/updateSts?status=true&id='+${u.id}}" class="btn btn-sm btn-primary"> Active</a>
+                            <a th:href="@{'/admin/updateSts?status=false&id='+${u.id}}" class="btn btn-sm btn-danger"> Inactive</a>
                         </td>
                     </tr>
                     </tbody>

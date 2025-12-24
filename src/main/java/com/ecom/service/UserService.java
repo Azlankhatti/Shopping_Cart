@@ -12,4 +12,6 @@ public interface UserService {
     public UserDetails getUserByEmail(String email);
 
     public List<UserDetails> getUsers(String role);
+
+    boolean updateAccountStatus(Integer id, Boolean status);
 }
