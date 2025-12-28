@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -41,6 +43,12 @@ public class UserDetails {
     private String role;
 
     private boolean isEnable;
+
+    private boolean accountNonLocked;
+
+    private Integer failAttempt;
+
+    private Date lockTime;
 
 
 

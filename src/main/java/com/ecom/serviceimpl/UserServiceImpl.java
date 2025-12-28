@@ -3,11 +3,13 @@ package com.ecom.serviceimpl;
 import com.ecom.model.UserDetails;
 import com.ecom.repository.UserRepository;
 import com.ecom.service.UserService;
+import com.ecom.util.AppConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,6 +58,48 @@ public class UserServiceImpl implements UserService {
         }
 
         return false;
+    }
+
+    @Override
+    public void increaseFailedAttempt(UserDetails user) {
+        int attempt =  user.getFailAttempt() + 1;
+        user.setFailAttempt(attempt);
+        userRepository.save(user);
+
+    }
+
+    @Override
+    public void userAccountLock(UserDetails user) {
+        user.setAccountNonLocked(false);
+        user.setLockTime(new Date());
+        userRepository.save(user);
+
+
+    }
+
+    @Override
+    public boolean unlockAccountTimeExpired(UserDetails user) {
+
+        long lockTime =user.getLockTime().getTime();
+        long unLockTime = lockTime+ AppConstant.UNLOCK_DURATION_TIME;
+
+        long currentTime = System.currentTimeMillis();
+
+        if (unLockTime<currentTime){
+
+            user.setAccountNonLocked(true);
+            user.setFailAttempt(0);
+            user.setLockTime(null);
+            userRepository.save(user);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public void resetAttempt(int userId) {
+
     }
 
 
