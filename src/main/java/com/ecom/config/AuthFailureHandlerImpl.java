@@ -35,19 +35,28 @@ public class AuthFailureHandlerImpl extends SimpleUrlAuthenticationFailureHandle
         if (userDetails.isEnable()){
             if (userDetails.isAccountNonLocked()){
 
-                if (userDetails.getFailAttempt()< AppConstant.ATTEMPT_TIME){
+                if (userDetails.getFailAttempt()<AppConstant.ATTEMPT_TIME){
 
+                    userService.increaseFailedAttempt(userDetails);
+                }else{
+                    userService.userAccountLock(userDetails);
+                    exception = new LockedException("your account is locked || failed attempt 3");
                 }
 
             }else {
-                exception = new LockedException("your account is inactive");
-            }
 
+                if(userService.unlockAccountTimeExpired(userDetails)){
+                    exception = new LockedException("your account is unlocked || please try to login");
+                }else {
+                    exception =new LockedException("your account is locked || please try after sometimes");
+                }
+
+            }
         }else {
             exception = new LockedException("your account is inactive");
         }
 
-
+        super.setDefaultFailureUrl("/signin?error");
         super.onAuthenticationFailure(request, response, exception);
     }
 }
