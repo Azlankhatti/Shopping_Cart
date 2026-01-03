@@ -112,5 +112,17 @@ public class HomeController {
         return "redirect:/register";
     }
 
+    //Forget password
+
+    @GetMapping("/forgot-password")
+    public String showForgotPassword(){
+        return "forgot_password.html";
+    }
+
+    @GetMapping("/reset-password")
+    public String showResetPassword(){
+        return "reset_password.html";
+    }
+
 
 }
