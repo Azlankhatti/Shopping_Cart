@@ -6,6 +6,7 @@ import com.ecom.model.UserDetails;
 import com.ecom.service.CategoryService;
 import com.ecom.service.ProductService;
 import com.ecom.service.UserService;
+import com.ecom.util.CommonUtil;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -119,10 +120,33 @@ public class HomeController {
         return "forgot_password.html";
     }
 
+    @PostMapping("/forgot-password")
+    public String processForgotPassword(@RequestParam String email,HttpSession session){
+
+        UserDetails userByEmail = userService.getUserByEmail(email);
+
+        if (ObjectUtils.isEmpty(userByEmail)){
+            session.setAttribute("Errormsg","Invalid email");
+
+        }else{
+            boolean sendMail = CommonUtil.sendMail();
+            if (sendMail){
+                session.setAttribute("succmsg","please check your email..password Reset link sent");
+            }else{
+                session.setAttribute("errormsg","Something wrong on server ! Email not send");
+            }
+        }
+        return "redirect:/forgot-password";
+    }
+
+
+
+
     @GetMapping("/reset-password")
     public String showResetPassword(){
         return "reset_password.html";
     }
+
 
 
 }
