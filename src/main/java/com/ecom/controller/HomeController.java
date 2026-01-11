@@ -7,6 +7,8 @@ import com.ecom.service.CategoryService;
 import com.ecom.service.ProductService;
 import com.ecom.service.UserService;
 import com.ecom.util.CommonUtil;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -24,6 +26,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class HomeController {
@@ -121,19 +124,26 @@ public class HomeController {
     }
 
     @PostMapping("/forgot-password")
-    public String processForgotPassword(@RequestParam String email,HttpSession session){
+    public String processForgotPassword(@RequestParam String email, HttpSession session, HttpServletRequest request){
 
         UserDetails userByEmail = userService.getUserByEmail(email);
 
         if (ObjectUtils.isEmpty(userByEmail)){
-            session.setAttribute("Errormsg","Invalid email");
+            session.setAttribute("errorMsg","Invalid email");
 
         }else{
+
+            String resetToken = UUID.randomUUID().toString();
+            userService.updateUserResetToken(email,resetToken);
+
+            String url= CommonUtil.generateUrl(request);
+
+
             boolean sendMail = CommonUtil.sendMail();
             if (sendMail){
-                session.setAttribute("succmsg","please check your email..password Reset link sent");
+                session.setAttribute("succMsg","please check your email..password Reset link sent");
             }else{
-                session.setAttribute("errormsg","Something wrong on server ! Email not send");
+                session.setAttribute("errorMsg","Something wrong on server ! Email not send");
             }
         }
         return "redirect:/forgot-password";

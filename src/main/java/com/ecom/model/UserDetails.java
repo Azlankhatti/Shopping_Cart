@@ -50,6 +50,8 @@ public class UserDetails {
 
     private Date lockTime;
 
+    private String reset_token;
+
 
 
 }
